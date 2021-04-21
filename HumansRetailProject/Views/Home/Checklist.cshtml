@@ -1,0 +1,165 @@
+﻿@{
+    Layout = null;
+}
+@model HumansRetailProject.Models.CheckLog
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Чек-лист</title>
+    <style>
+        body{
+            font-family: monospace;
+            font-size: 15px;
+        }
+        .main {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .main-item {
+            width:300px;
+            background: white;
+            border: 2px;
+            border-radius: 2px;
+            border-style: solid;
+            padding: 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .beautiful-button{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            margin: auto;
+            text-align: center;
+            margin-top: 15px;
+        }
+        .floating-button {
+            justify-content: center;
+            text-decoration: none;
+            display: flex;
+            width: 250px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 45px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+            color: #524f4e;
+            background: white;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+            transition: .3s;
+        }
+
+            .floating-button:hover {
+                background: #2EE59D;
+                box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+                color: white;
+                transform: translateY(-7px);
+            }
+       .text-box {
+            padding: 3px;
+            font-size: 15px;
+            border-width: 1px;
+            border-color: #000000;
+            background-color: #ffffff;
+            color: #000000;
+            border-style: solid;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+            .text-box:focus {
+                outline: none;
+            }
+    </style>
+</head>
+<body>
+    <center><h3>Форма чек-листа</h3></center>
+        @using (Html.BeginForm())
+        {
+        <div id="main" class="main">
+            <div class="main-item">
+                @Html.HiddenFor(model => model.UserId, Html.ViewContext.HttpContext.User.Identity.Name)
+                <p>
+                    Принтер банковских карт<br />
+                    @Html.EditorFor(model => model.CardPrinter)
+                </p>
+                <p>
+                    Лента
+                    @Html.CheckBoxFor(model => model.PrinterRibbon)
+                    Картридж
+                    @Html.CheckBoxFor(model => model.PrinterCartridge)
+                </p>
+                <p>
+                    Чистка
+                    @Html.CheckBoxFor(model => model.PrinterCleaning)
+                    Калибровка
+                    @Html.CheckBoxFor(model => model.PrinterCalibration)
+                </p>
+            </div>
+            <div class="main-item">
+                <p>
+                    Модель роутера
+                    @Html.DropDownListFor(model => model.RouterModel, new SelectList(ViewBag.RouterModels), new { @class = "form-control" })
+                </p>
+                <p>
+                    Серийный номер роутера<br />
+                    @Html.EditorFor(model => model.RouterSN)
+                </p>
+                <p>
+                    Модем 4G
+                    @Html.CheckBoxFor(model => model.Modem4G)
+                    Сим-карта
+                    @Html.CheckBoxFor(model => model.SimCard)
+                </p>
+                <p>
+                    IMSI Сим-карты<br />
+                    @Html.EditorFor(model => model.SimImsi)
+                </p>
+                <p>
+                    Оператор сим-карты<br />
+                    @Html.DropDownListFor(model => model.SimOperator, new SelectList(ViewBag.SimOperators))
+                </p>
+            </div>
+            <div class="main-item">
+                <p>
+                    Платёжный терминал<br />
+                    @Html.CheckBoxFor(model => model.PaymentTerminal)
+                </p>
+                <p>
+                    Провода терминала<br />
+                    @Html.CheckBoxFor(model => model.TerminalWires)
+                </p>
+                <p>
+                    Состояние терминала<br />
+                    @Html.DropDownListFor(model => model.TerminalCondition, new SelectList(ViewBag.TerminalConditions))
+                </p>
+            </div>
+            <div class="main-item">
+                <p>
+                    Скорость интернета на текущий момент<br />
+                    @Html.EditorFor(model => model.InternetSpeed)
+                </p>
+                <p>
+                    Интернет-провайдер<br />
+                    @Html.EditorFor(model => model.InternetProvider)
+                </p>
+                <p>
+                    Диспенсер<br />
+                    @Html.EditorFor(model => model.Dispenser)
+                </p>
+            </div>
+        </div>
+        <div class="beautiful-button">
+            <br/><input class="floating-button" type="submit" value="Сохранить" />
+        </div>
+        }
+</body>
+</html>

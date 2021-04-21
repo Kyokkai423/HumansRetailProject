@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Humans";
+}
+
+@using (Html.BeginForm())
+{
+<p>
+    @Html.Label("Вы авторизованы как: " + Html.ViewContext.HttpContext.User.Identity.Name);
+    @Html.ActionLink("Выйти", "Logout", "Account", null, new { @class = "btn btn-danger" })
+    @Html.ActionLink("Админ-панель", "Index", "Admin", null, new { @class = "btn btn-primary", style = "float: right" })
+    @Html.ActionLink("Импорт торговых точек", "Index", "Upload", null, new { @class = "btn btn-primary", style = "float: right; margin-right: 5px;" })
+</p>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Список торговых точек</div>
+        <table class="table table-striped">
+            @foreach (var b in ViewBag.Points)
+            {
+            <tr>
+                <td><p><b>@b.PointName</b></p>
+                <p>@b.PointAddress</p></td>
+                <td><p><a href="/Home/Point/?PNumber=@b.PointNumber">Информация</a></p></td>
+                <td><p><a href="/Home/Checklist/?PNumber=@b.PointNumber">Чек-лист</a></p></td>
+            </tr>
+            }
+        </table>
+    </div>
+}

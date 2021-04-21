@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Humans</title>
+</head>
+<body>
+    <div>
+        <h3>Информация о точке</h3>
+        <table>
+            @foreach (var b in ViewBag.CheckList)
+            {
+                <tr>
+                    <td><p>@b.CheckDate</p></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

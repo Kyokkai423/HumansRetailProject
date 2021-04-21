@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Импорт торговых точек";
+}
+
+@using (Html.BeginForm("Upload", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="upload" />
+    <br>
+    <input type="submit" value="Загрузить" />
+}
