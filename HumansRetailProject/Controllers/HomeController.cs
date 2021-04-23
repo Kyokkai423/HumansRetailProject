@@ -14,10 +14,7 @@ namespace HumansRetailProject.Controllers
         [Authorize]
         public ActionResult Index(string find)
         {
-            //var points = from m in db.Points
-                         //select m;
-            
-            IEnumerable < Points > points = db.Points;
+            IEnumerable <Points> points = db.Points;
             if (!String.IsNullOrEmpty(find))
             {
                 points = points.Where(s => s.PointName.Contains(find));
