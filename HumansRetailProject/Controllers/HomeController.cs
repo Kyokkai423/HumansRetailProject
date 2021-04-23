@@ -12,13 +12,19 @@ namespace HumansRetailProject.Controllers
     {
         ApplicationContext db = new ApplicationContext();
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(string find)
         {
-            IEnumerable<Points> points = db.Points;
+            //var points = from m in db.Points
+                         //select m;
+            
+            IEnumerable < Points > points = db.Points;
+            if (!String.IsNullOrEmpty(find))
+            {
+                points = points.Where(s => s.PointName.Contains(find));
+            }
             ViewBag.Points = points;
             return View();
         }
-
         [HttpGet]
         public ActionResult Point(int PNumber)
         {
