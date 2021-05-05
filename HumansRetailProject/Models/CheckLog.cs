@@ -8,13 +8,13 @@ namespace HumansRetailProject.Models
     public class CheckLog
     {
         public int Id { get; set; }
-        public string CardPrinter { get; set; }
+        public int CardPrinter { get; set; }
         public bool PrinterRibbon { get; set; }
         public bool PrinterCartridge { get; set; }
         public bool PrinterCleaning { get; set; }
         public bool PrinterCalibration { get; set; }
         public string RouterModel { get; set; }
-        public string RouterSN { get; set; }
+        public int RouterSN { get; set; }
         public bool Modem4G { get; set; }
         public bool SimCard { get; set; }
         public int SimImsi { get; set; }

@@ -88,8 +88,11 @@
             <div class="main-item">
                 @Html.HiddenFor(model => model.UserId, Html.ViewContext.HttpContext.User.Identity.Name)
                 <p>
-                    Принтер банковских карт<br />
-                    @Html.EditorFor(model => model.CardPrinter)
+                    Серийный номер принтера БК<br />
+                                              <input type="text" value="@ViewBag.GetPrinterSN" name="CardPrinter" id="CardPrinter"
+                                                     data-val-required="The field is required."
+                                                     data-val-number="The field must be a number."
+                                                     data-val="true" class="text-box single-line valid" />
                 </p>
                 <p>
                     Лента
@@ -111,7 +114,10 @@
                 </p>
                 <p>
                     Серийный номер роутера<br />
-                    @Html.EditorFor(model => model.RouterSN)
+                                          <input type="text" value="@ViewBag.GetRouterSN" name="RouterSN" id="RouterSN"
+                                                 data-val-required="The field is required."
+                                                 data-val-number="The field must be a number."
+                                                 data-val="true" class="text-box single-line valid">
                 </p>
                 <p>
                     Модем 4G

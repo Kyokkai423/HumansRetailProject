@@ -1,25 +1,87 @@
-﻿@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Humans</title>
-</head>
-<body>
-    <div>
-        <h3>Информация о точке</h3>
-        <table>
-            @foreach (var b in ViewBag.CheckList)
+﻿<style>
+    .container-fluid{
+        width: auto;
+    }
+    .panel.panel-default{
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin:10px;
+    }
+</style>
+@using(Html.BeginForm())
+{
+    
+<div class="container-fluid">
+    <p>
+        @Html.Label("Вы авторизованы как: " + Html.ViewContext.HttpContext.User.Identity.Name);
+        @Html.ActionLink("Выйти", "Logout", "Account", null, new { @class = "btn btn-danger" })
+        @Html.ActionLink("Админ-панель", "Index", "Admin", null, new { @class = "btn btn-primary", style = "float: right" })
+        @Html.ActionLink("Импорт торговых точек", "Index", "Upload", null, new { @class = "btn btn-primary", style = "float: right; margin-right: 5px;" })
+    </p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @foreach (var b in ViewBag.PointName)
             {
+                <p><b>Торговая точка:</b> @b.PointName</p>
+            }
+        </div>
+        @foreach (var b in ViewBag.CheckList)
+        {
+            <br />
+            <p><b>Дата последней проверки:</b> @b.CheckDate</p>
+        }
+        <table class="table table-striped">
+            <thead class="thead-dark">
                 <tr>
-                    <td><p>@b.CheckDate</p></td>
+                    <th scope="col">Принтер БК</th>
+                    <th scope="col">Риббон</th>
+                    <th scope="col">Картридж</th>
+                    <th scope="col">Чистка</th>
+                    <th scope="col">Калибровка</th>
+                    <th scope="col">Модель роутера</th>
+                    <th scope="col">Серийный номер роутера</th>
+                    <th scope="col">Модем 4G</th>
+                    <th scope="col">Сим-карта</th>
+                    <th scope="col">Сим IMSI</th>
+                    <th scope="col">Сим оператор</th>
+                    <th scope="col">Платёжный терминал</th>
+                    <th scope="col">Провода терминала</th>
+                    <th scope="col">Состояние терминала</th>
+                    <th scope="col">Скорость интернета</th>
+                    <th scope="col">Интернет-провайдер</th>
+                    <th scope="col">Диспенсер</th>
+                    <th scope="col">Проверяющий</th>
+                    <th scope="col">Дата проверки</th>
                 </tr>
+            </thead>
+            @foreach (var c in ViewBag.GetPointInfo)
+            {
+                <tbody>
+                    <tr>
+                        <td>@c.CardPrinter</td>
+                        <td>@c.PrinterRibbon</td>
+                        <td>@c.PrinterCartridge</td>
+                        <td>@c.PrinterCleaning</td>
+                        <td>@c.PrinterCalibration</td>
+                        <td>@c.RouterModel</td>
+                        <td>@c.RouterSN</td>
+                        <td>@c.Modem4G</td>
+                        <td>@c.SimCard</td>
+                        <td>@c.SimImsi</td>
+                        <td>@c.SimOperator</td>
+                        <td>@c.PaymentTerminal</td>
+                        <td>@c.TerminalWires</td>
+                        <td>@c.TerminalCondition</td>
+                        <td>@c.InternetSpeed</td>
+                        <td>@c.InternetProvider</td>
+                        <td>@c.Dispenser</td>
+                        <td>@c.UserId</td>
+                        <td>@c.CheckDate</td>
+                    </tr>
+                </tbody>
             }
         </table>
     </div>
-</body>
-</html>
+</div>
+}

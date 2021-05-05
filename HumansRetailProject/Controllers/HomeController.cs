@@ -26,13 +26,18 @@ namespace HumansRetailProject.Controllers
         public ActionResult Point(int PNumber)
         {
             ViewBag.CheckList = db.CheckLists.Where(x => x.PointID == PNumber);
+            ViewBag.GetPointInfo = db.CheckLogs.Where(x => x.PointId == PNumber);
+            ViewBag.PointName = db.Points.Where(x => x.PointNumber == PNumber);
             return View();
             
         }
         [HttpGet]
         public ActionResult Checklist()
         {
+            var pnumber = Convert.ToInt32(Request["PNumber"]);
             ViewBag.CheckLog = db.CheckLists.ToList();
+            ViewBag.GetPrinterSN = db.CheckLists.Where(x => x.PointID == pnumber).Select(x => x.PrinterSN).FirstOrDefault();
+            ViewBag.GetRouterSN = db.CheckLists.Where(x => x.PointID == pnumber).Select(x => x.RouterSN).FirstOrDefault();
             List<string> routerModels = new List<string>() { "MikroTik", "Tp-Link" };
             List<string> simOperators = new List<string>() { "Humans", "Beeline" };
             List<string> terminalConditions = new List<string>() { "Работает", "Не работает" };
@@ -50,7 +55,7 @@ namespace HumansRetailProject.Controllers
             checkLog.UserId = user;
             checkLog.PointId = pnumber;
             db.CheckLogs.Add(checkLog);
-
+            
             if (db.CheckLists.Any(x => x.PointID == pnumber) == true)
             {
                 var point = db.CheckLists
@@ -59,11 +64,14 @@ namespace HumansRetailProject.Controllers
 
                 point.CheckDate = DateTime.Now.ToString();
                 point.UserID = user;
+                point.PrinterSN = checkLog.CardPrinter;
+                point.RouterSN = checkLog.RouterSN;
             }
             else
             {
                 var point = db.CheckLists;
-                point.Add(new PointCheckList { PointID = pnumber, UserID = user, CheckDate = DateTime.Now.ToString() });
+                point.Add(new PointCheckList { PointID = pnumber, UserID = user, CheckDate = DateTime.Now.ToString(), RouterSN = checkLog.RouterSN,
+                PrinterSN = checkLog.CardPrinter });
             }
             db.SaveChanges();
             return RedirectToAction("Index");
