@@ -41,7 +41,6 @@ namespace HumansRetailProject.Controllers
             }
             return View(model);
         }
-        [HttpPost]
         public async Task<ActionResult> Delete(string id)
         {
             AppUser user = await UserManager.FindByIdAsync(id);

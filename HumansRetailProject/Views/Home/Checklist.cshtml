@@ -78,21 +78,113 @@
             .text-box:focus {
                 outline: none;
             }
+        a.animated-button:link, a.animated-button:visited {
+            position: relative;
+            display: block;
+            padding: 14px 15px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            letter-spacing: .08em;
+            border-radius: 0;
+            text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            transition: all 1s ease;
+        }
+
+            a.animated-button:link:after, a.animated-button:visited:after {
+                content: "";
+                position: absolute;
+                height: 0%;
+                left: 50%;
+                top: 50%;
+                width: 150%;
+                z-index: -1;
+                -webkit-transition: all 0.75s ease 0s;
+                -moz-transition: all 0.75s ease 0s;
+                -o-transition: all 0.75s ease 0s;
+                transition: all 0.75s ease 0s;
+            }
+
+            a.animated-button:link:hover, a.animated-button:visited:hover {
+                color: #FFF;
+                text-shadow: none;
+            }
+
+                a.animated-button:link:hover:after, a.animated-button:visited:hover:after {
+                    height: 450%;
+                }
+
+        a.animated-button:link, a.animated-button:visited {
+            position: relative;
+            display: block;
+            padding: 14px 15px;
+            color: black;
+            font-size: 14px;
+            border-radius: 0;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            margin: 5px;
+            letter-spacing: .08em;
+            text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            transition: all 1s ease;
+        }
+
+        /* Victoria Buttons */
+
+        a.animated-button.victoria-one {
+            border: 2px solid #D24D57;
+        }
+
+            a.animated-button.victoria-one:after {
+                background: #D24D57;
+                -moz-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+                -ms-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+                -webkit-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+                transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+            }
+
+        .menu-button {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 10px;
+            flex: 1 1 auto;
+        }
     </style>
 </head>
 <body>
     <center><h3>Форма чек-листа</h3></center>
-        @using (Html.BeginForm())
-        {
+    @using (Html.BeginForm())
+    {
+        <div class="menu-button">
+            @Html.ActionLink("Админ-панель", "Index", "Admin", null, new { @class = "animated-button victoria-one", style = "width: 200px;" })
+            @Html.ActionLink("На главную страницу", "Index", "Home", null, new { @class = "animated-button victoria-one", style = "width: 250px;" })
+            @Html.ActionLink("Импорт торговых точек", "Index", "Upload", null, new { @class = "animated-button victoria-one", style = "width: 250px;" })
+            @Html.ActionLink("Выйти", "Logout", "Account", null, new { @class = "animated-button victoria-one", style = "width: 150px;" })
+        </div>
         <div id="main" class="main">
             <div class="main-item">
                 @Html.HiddenFor(model => model.UserId, Html.ViewContext.HttpContext.User.Identity.Name)
                 <p>
                     Серийный номер принтера БК<br />
-                                              <input type="text" value="@ViewBag.GetPrinterSN" name="CardPrinter" id="CardPrinter"
-                                                     data-val-required="The field is required."
-                                                     data-val-number="The field must be a number."
-                                                     data-val="true" class="text-box single-line valid" />
+                    <input type="text" value="@ViewBag.GetPrinterSN" name="CardPrinter" id="CardPrinter"
+                           data-val-required="The field is required."
+                           data-val-number="The field must be a number."
+                           data-val="true" class="text-box single-line valid" />
                 </p>
                 <p>
                     Лента
@@ -114,10 +206,10 @@
                 </p>
                 <p>
                     Серийный номер роутера<br />
-                                          <input type="text" value="@ViewBag.GetRouterSN" name="RouterSN" id="RouterSN"
-                                                 data-val-required="The field is required."
-                                                 data-val-number="The field must be a number."
-                                                 data-val="true" class="text-box single-line valid">
+                    <input type="text" value="@ViewBag.GetRouterSN" name="RouterSN" id="RouterSN"
+                           data-val-required="The field is required."
+                           data-val-number="The field must be a number."
+                           data-val="true" class="text-box single-line valid">
                 </p>
                 <p>
                     Модем 4G
@@ -161,11 +253,15 @@
                     Диспенсер<br />
                     @Html.EditorFor(model => model.Dispenser)
                 </p>
+                <p>
+                    Дополнительная информация<br />
+                    @Html.EditorFor(model => model.CheckDescription)
+                </p>
             </div>
         </div>
         <div class="beautiful-button">
-            <br/><input class="floating-button" type="submit" value="Сохранить" />
+            <br /><input class="floating-button" type="submit" value="Сохранить" />
         </div>
-        }
+    }
 </body>
 </html>

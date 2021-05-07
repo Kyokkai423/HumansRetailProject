@@ -13,5 +13,6 @@ namespace HumansRetailProject.Models
         public int PrinterSN { get; set; }
         public int RouterSN { get; set; }
         public string CheckDate { get; set; }
+        public string Description { get; set; }
     }
 }

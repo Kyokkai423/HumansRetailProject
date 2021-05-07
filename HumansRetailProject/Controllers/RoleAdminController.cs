@@ -100,7 +100,6 @@ namespace HumansRetailProject.Controllers
             }
             return View("Error", new string[] { "Роль не найдена" });
         }
-        [HttpPost]
         public async Task<ActionResult> Delete(string id)
         {
             AppRole role = await RoleManager.FindByIdAsync(id);

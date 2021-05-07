@@ -13,6 +13,7 @@ namespace HumansRetailProject.Controllers
     public class UploadController : Controller
     {
         // GET: Upload
+        [Authorize(Roles = "Administrators")]
         public ActionResult Index()
         {
             return View();

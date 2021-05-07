@@ -25,9 +25,9 @@ namespace HumansRetailProject.Controllers
         [HttpGet]
         public ActionResult Point(int PNumber)
         {
-            ViewBag.CheckList = db.CheckLists.Where(x => x.PointID == PNumber);
+            ViewBag.CheckDate = db.CheckLists.Where(x => x.PointID == PNumber).Select(x => x.CheckDate).FirstOrDefault();
             ViewBag.GetPointInfo = db.CheckLogs.Where(x => x.PointId == PNumber);
-            ViewBag.PointName = db.Points.Where(x => x.PointNumber == PNumber);
+            ViewBag.PointName = db.Points.Where(x => x.PointNumber == PNumber).Select(x => x.PointName).FirstOrDefault();
             return View();
             
         }
@@ -66,12 +66,13 @@ namespace HumansRetailProject.Controllers
                 point.UserID = user;
                 point.PrinterSN = checkLog.CardPrinter;
                 point.RouterSN = checkLog.RouterSN;
+                point.Description = checkLog.CheckDescription;
             }
             else
             {
                 var point = db.CheckLists;
                 point.Add(new PointCheckList { PointID = pnumber, UserID = user, CheckDate = DateTime.Now.ToString(), RouterSN = checkLog.RouterSN,
-                PrinterSN = checkLog.CardPrinter });
+                PrinterSN = checkLog.CardPrinter, Description = checkLog.CheckDescription });
             }
             db.SaveChanges();
             return RedirectToAction("Index");

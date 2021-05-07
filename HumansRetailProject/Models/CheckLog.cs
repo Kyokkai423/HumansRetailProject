@@ -28,5 +28,6 @@ namespace HumansRetailProject.Models
         public string UserId { get; set; }
         public int PointId { get; set; }
         public string CheckDate { get; set; }
+        public string CheckDescription { get; set; }
     }
 }

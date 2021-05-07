@@ -5,17 +5,191 @@
 @{
     ViewBag.Title = "Роли";
 }
-<p>
-    @Html.Label("Вы авторизованы как: " + Html.ViewContext.HttpContext.User.Identity.Name);
-    @Html.ActionLink("Выйти", "Logout", "Account", null, new { @class = "btn btn-danger" })
-    @Html.ActionLink("Админ-панель", "Index", "Admin", null, new { @class = "btn btn-primary", style = "float: right; " })
-    @Html.ActionLink("Список ролей", "Index", "RoleAdmin", null, new { @class = "btn btn-primary", style = "float: right; margin-right: 5px" })
-    @Html.ActionLink("На главную страницу", "Index", "Home", null, new { @class = "btn btn-primary", style = "float: right; margin-right: 5px" })
-</p>
+<style>
+.dataTable {
+        width: 100%;
+        margin-bottom: 20px;
+        border: 5px solid #fff;
+        border-top: 5px solid #fff;
+        border-bottom: 3px solid #fff;
+        border-collapse: collapse;
+        outline: 3px solid #ffd300;
+        font-size: 15px;
+        background: #fff !important;
+    }
 
-<div class="panel panel-primary">
-    <div class="panel-heading">Roles</div>
-    <table class="table table-striped">
+        .dataTable th {
+            font-weight: bold;
+            padding: 7px;
+            background: #ffd300;
+            border: none;
+            text-align: left;
+            font-size: 14px;
+            border-top: 3px solid #fff;
+            border-bottom: 3px solid #ffd300;
+        }
+
+        .dataTable td {
+            padding: 5px;
+            border: none;
+            border-top: 3px solid #fff;
+            border-bottom: 3px solid #fff;
+            font-size: 14px;
+        }
+
+        .dataTable tbody tr:nth-child(even) {
+            background: #f8f8f8 !important;
+        }
+
+    a.animated-button:link, a.animated-button:visited {
+        position: relative;
+        display: block;
+        padding: 14px 15px;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        overflow: hidden;
+        letter-spacing: .08em;
+        border-radius: 0;
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+        -webkit-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        transition: all 1s ease;
+    }
+
+        a.animated-button:link:after, a.animated-button:visited:after {
+            content: "";
+            position: absolute;
+            height: 0%;
+            left: 50%;
+            top: 50%;
+            width: 150%;
+            z-index: -1;
+            -webkit-transition: all 0.75s ease 0s;
+            -moz-transition: all 0.75s ease 0s;
+            -o-transition: all 0.75s ease 0s;
+            transition: all 0.75s ease 0s;
+        }
+
+        a.animated-button:link:hover, a.animated-button:visited:hover {
+            color: #FFF;
+            text-shadow: none;
+        }
+
+            a.animated-button:link:hover:after, a.animated-button:visited:hover:after {
+                height: 450%;
+            }
+
+    a.animated-button:link, a.animated-button:visited {
+        position: relative;
+        display: block;
+        padding: 14px 15px;
+        color: black;
+        font-size: 14px;
+        border-radius: 0;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        overflow: hidden;
+        margin: 5px;
+        letter-spacing: .08em;
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+        -webkit-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        transition: all 1s ease;
+    }
+
+    /* Victoria Buttons */
+
+    a.animated-button.victoria-one {
+        border: 2px solid #D24D57;
+    }
+
+        a.animated-button.victoria-one:after {
+            background: #D24D57;
+            -moz-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+            -ms-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+            -webkit-transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+            transform: translateX(-50%) translateY(-50%) rotate(-25deg);
+        }
+
+    .menu-button {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 10px;
+        flex: 1 1 auto;
+    }
+
+    .auth {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 10px;
+        font-size: 15px;
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .flex-info {
+        display: flex;
+        flex-direction: column;
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+    }
+    .double-border-button {
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px 20px;
+        padding: 10px 30px;
+        position: relative;
+        border: 2px solid #f1c40f;
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
+        color: black;
+        font-family: 'Montserrat', sans-serif;
+        transition: .4s;
+    }
+
+        .double-border-button:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            border: 2px solid rgba(0, 0, 0, 0);
+            transition: .4s;
+        }
+
+        .double-border-button:hover:after {
+            border-color: #f1c40f;
+            width: calc(100% - 10px);
+            height: calc(100% + 10px);
+        }
+</style>
+<div class="auth">
+    <label>Вы авторизованы как: <b>@Html.ViewContext.HttpContext.User.Identity.Name</b></label>
+</div>
+<div class="menu-button">
+    @Html.ActionLink("Админ-панель", "Index", "Admin", null, new { @class = "animated-button victoria-one", style = "width: 200px;" })
+    @Html.ActionLink("На главную страницу", "Index", "Home", null, new { @class = "animated-button victoria-one", style = "width: 250px;" })
+    @Html.ActionLink("Выйти", "Logout", "Account", null, new { @class = "animated-button victoria-one", style = "width: 150px;" })
+</div>
+
+<div>
+    <div>
+        <b>Доступные роли</b>
+    </div>
+    <br />
+    <table class="dataTable">
         <tr>
             <th>ID</th>
             <th>Название</th>
@@ -49,17 +223,15 @@
                         }
                     </td>
                     <td>
-                        @using (Html.BeginForm("Delete", "RoleAdmin", new { id = role.Id }))
-                        {
                             @Html.ActionLink("Изменить", "Edit", new { id = role.Id },
-                                new { @class = "btn btn-primary btn-xs", style = "float:left; margin-right:5px" })
-                            <button class="btn btn-danger btn-xs" type="submit">Удалить</button>
-                        }
+                                new { @class = "double-border-button", style = "float:left; margin-right:5px" })
+                            @Html.ActionLink("Удалить", "Delete", new { id = role.Id },
+                                new { @class = "double-border-button", style = "float:left; margin-right:5px" })
                     </td>
                 </tr>
             }
         }
     </table>
 </div>
-@Html.ActionLink("Создать", "Create", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("Создать новую роль", "Create", null, new { @class = "double-border-button" })
 
